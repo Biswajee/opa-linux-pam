@@ -32,3 +32,4 @@ jobs:
         
       - name: Build project
         run: make & make up
+        working-directory: pam_opa
