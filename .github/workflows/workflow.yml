@@ -26,5 +26,5 @@ jobs:
       - name: Checkout opa/contrib
         uses: actions/checkout@master
         with:
-          name: opa/contrib
+          name: open-policy-agent/contrib
           ref: refs/heads/main
