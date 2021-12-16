@@ -3,17 +3,17 @@ name: opa-linux-pam-build-pipeline
 on:
   push:
     branches: 
-      - master
-      - develop
-      - 'feature/**'
+    - master
+    - develop
+    - 'feature/**'
     paths-ignore:
-      - '.vscode/**'
-      - README.md
+    - '.vscode/**'
+    - README.md
   pull_request:
     branches: 
-      - master
-      - develop
-      - 'feature/**'
+    - master
+    - develop
+    - 'feature/**'
 
 jobs:
   test:
