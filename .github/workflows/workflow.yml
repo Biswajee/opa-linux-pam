@@ -1,0 +1,30 @@
+name: opa-linux-pam-build-pipeline
+
+on:
+  push:
+    branches: 
+      - master
+      - develop
+      - 'feature/**'
+    paths-ignore:
+      - '.vscode/**'
+      - README.md
+  pull_request:
+    branches: 
+      - master
+      - develop
+      - 'feature/**'
+
+jobs:
+  test:
+    name: test-pipeline
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Checkout opa/contrib
+        uses: actions/checkout@master
+        with:
+          name: opa/contrib
+          ref: refs/heads/main
