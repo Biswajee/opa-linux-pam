@@ -54,4 +54,4 @@ jobs:
           sudo make install
 
       - name: Check if lib/security exists
-        run: ls -al /lib/security
+        run: tree /lib
