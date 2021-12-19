@@ -1,4 +1,4 @@
-name: opa-linux-pam-build-pipeline
+name: opa-pam-build-from-scratch
 
 on:
   push:

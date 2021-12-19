@@ -1,4 +1,4 @@
-name: opa-linux-pam-build-pipeline
+name: opa-pam-docker-build
 
 on:
   push:
