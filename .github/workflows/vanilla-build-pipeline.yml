@@ -52,3 +52,6 @@ jobs:
           sudo autoreconf -i
           ./configure --prefix=/usr && make
           sudo make install
+
+      - name: Check if lib/security exists
+        run: ls -al /lib/security
