@@ -50,5 +50,5 @@ jobs:
           set -e -x
           cd jansson
           sudo autoreconf -i
-          ./configure --prefix=/usr
-          make && make install
+          ./configure --prefix=/usr && make
+          sudo make install
