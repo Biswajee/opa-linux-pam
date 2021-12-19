@@ -9,6 +9,7 @@ on:
     paths-ignore:
     - '.vscode/**'
     - README.md
+    - '.github/workflows/vanilla-build-pipeline.yaml'
   pull_request:
     branches: 
     - master
