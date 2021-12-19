@@ -48,6 +48,7 @@ jobs:
       - name: Setup akheron/jansson
         run: |
           set -e -x
-          sudo cd jansson && autoreconf -i
-          sudo ./configure --prefix=/usr
+          cd jansson
+          sudo autoreconf -i
+          ./configure --prefix=/usr
           make && make install
