@@ -21,6 +21,13 @@ jobs:
     name: build-image
     runs-on: ubuntu-20.04
     steps:
+      - name: Install dependencies
+        run: |
+          set -e -x
+          sudo apt-get install libpam0g-dev
+          sudo apt-get install libcurl4-gnutls-dev
+          sudo apt-get install autoconf
+
       - name: Checkout repo
         uses: actions/checkout@v2
 
@@ -30,14 +37,7 @@ jobs:
           repository: open-policy-agent/contrib
           ref: refs/heads/main
           path: pam_opa
-        
-      - name: Install dependencies
-        run: |
-          set -e -x
-          sudo apt-get install libpam0g-dev
-          sudo apt-get install libcurl4-gnutls-dev
-          sudo apt-get install autoconf
-      
+
       - name: Checkout akheron/jansson
         uses: actions/checkout@v2
         with:
@@ -48,6 +48,3 @@ jobs:
         run: |
           set -e -x
           ls -al
-          cd jansson && autoreconf -i
-          ./configure --prefix=/usr
-          make && make install
