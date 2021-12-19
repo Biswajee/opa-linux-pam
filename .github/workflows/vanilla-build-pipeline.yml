@@ -43,8 +43,11 @@ jobs:
         with:
           repository: akheron/jansson
           ref: refs/heads/master
+          path: jansson
 
       - name: Setup akheron/jansson
         run: |
           set -e -x
-          ls -al
+          cd jansson && autoreconf -i
+          ./configure --prefix=/usr
+          make && make install
