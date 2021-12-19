@@ -9,7 +9,7 @@ on:
     paths-ignore:
     - '.vscode/**'
     - README.md
-    - '.github/workflows/docker-pipeline.yaml'
+    - '.github/workflows/docker-pipeline.yml'
   pull_request:
     branches: 
     - master
