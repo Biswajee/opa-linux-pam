@@ -30,6 +30,22 @@ jobs:
           ref: refs/heads/main
           path: pam_opa
         
-      - name: Build project
-        run: make && make up
-        working-directory: pam_opa
+      - name: Install dependencies
+        run: |
+          set -e -x
+          apt-get install libpam0g-dev
+          apt-get install libcurl4-gnutls-dev
+          apt-get install autoconf
+      
+      - name: Checkout akheron/jansson
+        uses: actions/checkout@master
+        with:
+          repository: akheron/jansson
+          ref: refs/heads/master
+
+      - name: Setup akheron/jansson
+        run: |
+          set -e -x
+          cd jansson && autoreconf -i
+          ./configure --prefix=/usr
+          make && make install

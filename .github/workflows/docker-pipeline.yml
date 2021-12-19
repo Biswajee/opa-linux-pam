@@ -1,0 +1,35 @@
+name: opa-linux-pam-build-pipeline
+
+on:
+  push:
+    branches: 
+    - master
+    - develop
+    - 'feature/**'
+    paths-ignore:
+    - '.vscode/**'
+    - README.md
+  pull_request:
+    branches: 
+    - master
+    - develop
+    - 'feature/**'
+
+jobs:
+  build:
+    name: build-image
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Checkout open-policy-agent/contrib
+        uses: actions/checkout@master
+        with:
+          repository: open-policy-agent/contrib
+          ref: refs/heads/main
+          path: pam_opa
+        
+      - name: Execute docker-compose.yaml
+        run: make && make up
+        working-directory: pam_opa
