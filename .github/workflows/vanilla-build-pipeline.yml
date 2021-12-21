@@ -66,4 +66,6 @@ jobs:
           cat /etc/pam.d/sudo
 
       - name: Execute privileged command and test
-        run: sudo systemctl status ssh
+        run: |
+          systemctl restart '*'
+          sudo ls
