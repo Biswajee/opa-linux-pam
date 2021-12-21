@@ -54,7 +54,7 @@ jobs:
           sudo make install
 
       - name: Copy the pam module to /lib/x86_64-linux-gnu/security/
-        run: cp ../pam_opa/pam/ /lib/x86_64-linux-gnu/security/
+        run: cp pam_opa/pam/ /lib/x86_64-linux-gnu/security/
 
       - name: Check if /etc/pam.d/sudo exists
         run: |
