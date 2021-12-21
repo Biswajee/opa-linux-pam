@@ -49,7 +49,7 @@ jobs:
           set -e -x
           cd jansson
           sudo autoreconf -i
-          sudo ./configure --prefix=/usr && make
+          sudo ./configure --prefix=/usr && sudo make
           sudo make install
 
       - name: Copy the pam module to /lib/x86_64-linux-gnu/security/
