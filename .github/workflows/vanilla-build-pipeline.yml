@@ -24,8 +24,8 @@ jobs:
       - name: Install dependencies
         run: |
           set -e -x
-          sudo apt update
-          sudo apt install -y libpam0g-dev libcurl4-gnutls-dev autoconf
+          sudo apt-get update -y
+          sudo apt-get install -y libpam0g-dev libtool-bin libcurl4-gnutls-dev autoconf
 
       - name: Checkout repo
         uses: actions/checkout@v2
