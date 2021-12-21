@@ -55,7 +55,7 @@ jobs:
       - name: Copy the pam module to /lib/x86_64-linux-gnu/security/
         run: |
           set -e -x 
-          cd contrib/pam_opa/pam/ && make 
+          cd contrib/pam_opa/pam/ && sudo make 
           sudo cp *.so /lib/x86_64-linux-gnu/security/
 
       - name: Configure OPA as PAM module
