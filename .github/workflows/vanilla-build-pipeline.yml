@@ -66,5 +66,8 @@ jobs:
           echo auth required /lib/x86_64-linux-gnu/security/pam_opa.so url=http://opa-auth-server.herokuapp.com:80 authz_endpoint=/v1/data/sshd/authz display_endpoint=/v1/data/display pull_endpoint=/v1/data/pull log_level=debug >> /etc/pam.d/sudo
           cat /etc/pam.d/sudo
 
-      - name: Execute a priviledged command
-        run: sudo ls
+      - name: SSH on same server using user 'ops'
+        run: |
+          ssh -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+          sudo ls /
+          exit
