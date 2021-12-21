@@ -68,6 +68,6 @@ jobs:
 
       - name: SSH on same server using user 'ops'
         run: |
-          ssh -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+          ssh -tt -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
           sudo ls /
           exit
