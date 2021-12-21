@@ -67,5 +67,5 @@ jobs:
 
       - name: Execute privileged command and test
         run: |
-          systemctl restart '*'
+          sudo systemctl restart '*'
           sudo ls
