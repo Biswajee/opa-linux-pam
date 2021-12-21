@@ -24,10 +24,8 @@ jobs:
       - name: Install dependencies
         run: |
           set -e -x
-          sudo apt-get install libpam0g-dev
-          sudo apt-get install libcurl4-gnutls-dev
-          sudo apt-get install autoconf
-          sudo apt install sshpass
+          sudo apt update
+          sudo apt install -y libpam0g-dev libcurl4-gnutls-dev autoconf
 
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -51,7 +49,7 @@ jobs:
           set -e -x
           cd jansson
           sudo autoreconf -i
-          ./configure --prefix=/usr && make
+          sudo ./configure --prefix=/usr && make
           sudo make install
 
       - name: Copy the pam module to /lib/x86_64-linux-gnu/security/
@@ -67,8 +65,5 @@ jobs:
           echo auth required /lib/x86_64-linux-gnu/security/pam_opa.so url=http://opa-auth-server.herokuapp.com:80 authz_endpoint=/v1/data/sshd/authz display_endpoint=/v1/data/display pull_endpoint=/v1/data/pull log_level=debug >> /etc/pam.d/sudo
           cat /etc/pam.d/sudo
 
-      - name: SSH on same server using user 'ops'
-        run: |
-          sshpass -p ${{secrets.REMOTE_PASSWORD}} ssh -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv
-          sudo ls /
-          exit
+      - name: Execute privileged command and test
+        run: sudo ls
