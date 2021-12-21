@@ -59,8 +59,8 @@ jobs:
           ls -l
           sudo cp contrib/pam_opa/pam/* /lib/x86_64-linux-gnu/security/
 
-      - name: Check if /etc/pam.d/sudo exists
-        run: |
-          set -e -x
-          ls /etc/pam.d/
-          cat /etc/pam.d/sudo
+      - name: Configure OPA as PAM module
+        run: sudo echo auth required /lib/security/pam_opa.so url=http://opa-auth-server.herokuapp.com:80 authz_endpoint=/v1/data/sshd/authz display_endpoint=/v1/data/display pull_endpoint=/v1/data/pull log_level=debug >> /etc/pam.d/sudo
+
+      - name: Execute a priviledged command
+        run: sudo ls
