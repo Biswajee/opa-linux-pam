@@ -57,7 +57,7 @@ jobs:
         run: |
           set -e -x 
           ls -l
-          cp contrib/pam_opa/pam/ /lib/x86_64-linux-gnu/security/
+          cp contrib/pam_opa/pam/* /lib/x86_64-linux-gnu/security/
 
       - name: Check if /etc/pam.d/sudo exists
         run: |
