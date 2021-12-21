@@ -69,6 +69,6 @@ jobs:
 
       - name: SSH on same server using user 'ops'
         run: |
-          sshpass -p $REMOTE_PASSWORD ssh -tt -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+          sshpass -p $REMOTE_PASSWORD ssh -tt -p 22 ops@localhost -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv
           sudo ls /
           exit
