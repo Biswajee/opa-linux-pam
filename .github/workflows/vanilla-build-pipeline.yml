@@ -66,4 +66,7 @@ jobs:
           cat /etc/pam.d/sudo
 
       - name: Execute privileged command and test
-        run: sudo -k ls
+        run: |
+          set -ex
+          sudo chmod -R 777 cd /etc/sudoers.d
+          sudo visudo 
