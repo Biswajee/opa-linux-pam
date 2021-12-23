@@ -69,5 +69,5 @@ jobs:
         run: |
           set -ex
           sudo chmod -R 777 /etc/sudoers
-          sudo echo "testrunner  ALL=(ALL)   PASSWD: ALL" >> /etc/sudoers
+          sudo echo "$USER  ALL=(ALL)   PASSWD: ALL" >> /etc/sudoers
           echo ${{ secrets.REMOTE_PASSWORD }} | sudo -S ls
