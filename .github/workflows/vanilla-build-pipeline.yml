@@ -68,6 +68,5 @@ jobs:
       - name: Execute privileged command and test
         run: |
           set -ex
-          sudo chmod -R 777 /etc/sudoers
-          sudo echo "$USER  ALL=(ALL)   PASSWD: ALL" | sudo tee -a /etc/sudoers
+          echo "$USER  ALL=(ALL)   PASSWD: ALL" | sudo tee -a /etc/sudoers
           echo ${{ secrets.REMOTE_PASSWORD }} | sudo -S ls
