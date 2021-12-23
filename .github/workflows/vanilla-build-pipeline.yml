@@ -68,6 +68,6 @@ jobs:
       - name: Execute privileged command and test
         run: |
           set -ex
-          sudo chmod -R 777 /etc/sudoers.d
-          cd /etc/sudoers.d
-          sudo visudo 
+          echo $USER
+          echo "testuser1  ALL=(ALL)   PASSWD: ALL" >> /etc/sudoers
+          sudo ls
