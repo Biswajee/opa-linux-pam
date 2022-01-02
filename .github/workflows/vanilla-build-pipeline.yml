@@ -1,5 +1,6 @@
 name: opa-pam-build-from-scratch
 
+# triggers defined below to automatically trigger the pipeline on push and pull requests
 on:
   push:
     branches: 
@@ -9,6 +10,7 @@ on:
     paths-ignore:
     - '.vscode/**'
     - README.md
+    - docs/**
     - '.github/workflows/docker-pipeline.yml'
   pull_request:
     branches: 
@@ -16,20 +18,27 @@ on:
     - develop
     - 'feature/**'
 
+# the single 'playground' job installs the necessary dependencies, configures the pipeline and executes the command.
+# Ideally, two different jobs ('build' and 'run command') helps here. But github workflows does not offer a 'stage'
+# inside which jobs can execute as the azure pipelines.
 jobs:
-  build:
+  playground:
     name: playground
     runs-on: ubuntu-20.04
     steps:
+      # the below dependencies will be required to build the OPA-PAM setup 
       - name: Install dependencies
         run: |
           set -e -x
           sudo apt-get update -y
           sudo apt-get install -y libpam0g-dev libtool-bin libcurl4-gnutls-dev autoconf
 
+      # Check out the current repository in the pipeline
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      # Check out the open-policy-agent/contrib repository in the pipeline
+      # and place its contents in the contrib directory
       - name: Checkout open-policy-agent/contrib
         uses: actions/checkout@v2
         with:
@@ -37,6 +46,8 @@ jobs:
           ref: refs/heads/main
           path: contrib
 
+      # Check out the akheron/jansson repository in the pipeline
+      # and place its contents in the jansson directory
       - name: Checkout akheron/jansson
         uses: actions/checkout@v2
         with:
@@ -44,6 +55,8 @@ jobs:
           ref: refs/heads/master
           path: jansson
 
+      #  Build and install the akheron/jansson repository on the agent
+      # (The C library for encoding, decoding and manipulating JSON data)
       - name: Setup akheron/jansson
         run: |
           set -e -x
@@ -52,12 +65,14 @@ jobs:
           sudo ./configure --prefix=/usr && sudo make
           sudo make install
 
+      # Build the OPA PAM module and copy it to /lib/security directory in the system.
       - name: Copy the pam module to /lib/x86_64-linux-gnu/security/
         run: |
           set -e -x 
           cd contrib/pam_opa/pam/ && sudo make 
           sudo cp *.so /lib/x86_64-linux-gnu/security/
 
+      # Configure the agent's sudo service to use the OPA PAM for sudo authorization
       - name: Configure OPA as PAM module
         run: |
           set -e -x
@@ -65,6 +80,8 @@ jobs:
           echo auth required /lib/x86_64-linux-gnu/security/pam_opa.so url=http://opa-auth-server.herokuapp.com:80 authz_endpoint=/v1/data/sudo/authz display_endpoint=/v1/data/display pull_endpoint=/v1/data/pull log_level=debug >> /etc/pam.d/sudo
           cat /etc/pam.d/sudo
 
+      # Finally, test if the sudo command connects to the authorization service to
+      # get a policy decision and act accordingly
       - name: Execute privileged command and test
         run: |
           set -ex
