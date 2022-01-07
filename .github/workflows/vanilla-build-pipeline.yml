@@ -88,3 +88,5 @@ jobs:
           echo "$USER:${{ secrets.REMOTE_PASSWORD }}" | sudo chpasswd
           echo "$USER  ALL=(ALL)   PASSWD: ALL" | sudo tee -a /etc/sudoers
           echo ${{ secrets.REMOTE_PASSWORD }} | sudo -S ls
+          
+# demo-time
